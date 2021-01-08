@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Choice from './Choice'
+import Combo from './Combo'
+import DatePicker from './DatePicker'
 
 ReactDOM.render(
   <React.StrictMode>
