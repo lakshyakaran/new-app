@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { Nav, INavLink, INavStyles, INavLinkGroup } from 'office-ui-fabric-react/lib/Nav';
 import { initializeIcons } from '@uifabric/icons';
-import { useHistory } from 'react-router-dom'
-import Combo from './Combo'
-import Choice from './Choice'
+import { useHistory, matchPath } from 'react-router-dom'
 
 initializeIcons();
 
@@ -12,19 +10,19 @@ const navLinkGroups: INavLinkGroup[] = [
     links: [
       {
         name: 'Home',
-        url: 'http://example.com',
+        url: '',
         expandAriaLabel: 'Expand Home section',
         collapseAriaLabel: 'Collapse Home section',
         links: [
           {
             name: 'Activity',
-            url: '/Combo',
+            url: '/combo',
             key: 'key1',
             // target: '_blank',
           },
           {
             name: 'MSN',
-            url: '/Choice',
+            url: '/choice',
             // disabled: true,
             key: 'key2',
             // target: '_blank',
@@ -34,7 +32,7 @@ const navLinkGroups: INavLinkGroup[] = [
       },
       {
         name: 'Documents',
-        url: 'http://example.com',
+        url: '',
         key: 'key3',
         isExpanded: true,
         target: '_blank',
@@ -88,17 +86,34 @@ const navStyles: Partial<INavStyles> = {
 
 function NavBar() {
     let history = useHistory();
-    const [ selectedNavKey, setSelectedNavKey ] = React.useState('key2')
+    const [ selectedNavKey, setSelectedNavKey ] = React.useState('')
     const _onLinkClick = (ev?: React.MouseEvent<HTMLElement>, item?: INavLink) => {
-        if (item && item.name === 'News') {
-            console.log('News link clicked');
-        }
+        setSelectedNavKey(item?.key || '');
     }
+    console.log(history);
     React.useEffect(() => {
-        window.addEventListener('hashchange', () => {
-            setSelectedNavKey(document.location.hash || '#')
-        })
-    })
+      navLinkGroups[0].links.map(item => {
+        if(item.links) {
+          item.links.map(subItem => {
+            if(matchPath(history.location.pathname, {
+              path: subItem.url,
+              exact: true
+            })) {
+              setSelectedNavKey(subItem?.key || '');
+              return;
+            }
+          })
+        } else {
+          if(matchPath(history.location.pathname, {
+            path: item.url,
+            exact: true
+          })) {
+            setSelectedNavKey(item?.key || '');
+            return;
+          }
+        }
+      })
+    }, [history.location.pathname])
     return (
         <div>
             <Nav
