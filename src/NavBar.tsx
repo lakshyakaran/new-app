@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Nav, INavLink, INavStyles, INavLinkGroup } from 'office-ui-fabric-react/lib/Nav';
+import { Sticky, StickyPositionType } from 'office-ui-fabric-react';
 import { initializeIcons } from '@uifabric/icons';
 import { useHistory, matchPath } from 'react-router-dom'
 
@@ -10,7 +11,7 @@ const navLinkGroups: INavLinkGroup[] = [
     links: [
       {
         name: 'Home',
-        url: '',
+        url: '/',
         expandAriaLabel: 'Expand Home section',
         collapseAriaLabel: 'Collapse Home section',
         links: [
@@ -31,11 +32,11 @@ const navLinkGroups: INavLinkGroup[] = [
         isExpanded: true,
       },
       {
-        name: 'Documents',
-        url: '',
+        name: 'Dialog',
+        url: './dialog',
         key: 'key3',
-        isExpanded: true,
-        target: '_blank',
+        // isExpanded: true,
+        // target: '_blank',
       },
       {
         name: 'Pages',
@@ -44,16 +45,14 @@ const navLinkGroups: INavLinkGroup[] = [
         target: '_blank',
       },
       {
-        name: 'Notebook',
-        url: 'http://msn.com',
+        name: 'Card',
+        url: '/card',
         key: 'key5',
-        disabled: true,
       },
       {
-        name: 'Communication and Media',
-        url: 'http://msn.com',
+        name: 'List',
+        url: '/list',
         key: 'key6',
-        target: '_blank',
       },
       {
         name: 'News',
@@ -64,7 +63,7 @@ const navLinkGroups: INavLinkGroup[] = [
       },
       {
         name: 'Other',
-        url: 'http://cnn.com',
+        url: '',
         // icon: 'News',
         key: 'key8',
         target: '_blank',
@@ -80,6 +79,7 @@ const navStyles: Partial<INavStyles> = {
     boxSizing: 'border-box',
     border: '1px solid #eee',
     overflowY: 'auto',
+    // backgroundColor:'#FC8019'
   },
 };
 
@@ -90,7 +90,7 @@ function NavBar() {
     const _onLinkClick = (ev?: React.MouseEvent<HTMLElement>, item?: INavLink) => {
         setSelectedNavKey(item?.key || '');
     }
-    console.log(history);
+    // console.log(history);
     React.useEffect(() => {
       navLinkGroups[0].links.map(item => {
         if(item.links) {
@@ -115,15 +115,19 @@ function NavBar() {
       })
     }, [history.location.pathname])
     return (
-        <div>
-            <Nav
-                onLinkClick={_onLinkClick}
-                selectedKey={selectedNavKey}
-                ariaLabel="Nav basic example"
-                styles={navStyles}
-                groups={navLinkGroups}
-            />
-        </div>
+      <Sticky
+        stickyPosition={StickyPositionType.Both}
+        // isScrollSynced={true}
+        stickyBackgroundColor="transparent"
+      >
+        <Nav
+          onLinkClick={_onLinkClick}
+          selectedKey={selectedNavKey}
+          ariaLabel="Nav basic example"
+          styles={navStyles}
+          groups={navLinkGroups}
+        />
+      </Sticky>
     )
 }
 

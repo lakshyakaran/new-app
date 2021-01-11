@@ -14,20 +14,28 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Layout from "./Layout";
 import Combo from "./Combo";
 import Choice from "./Choice";
+import DialogComponent from "./DialogComponent";
+import CardComponent from "./CardComponent";
+import SearchComponent from "./SearchComponent";
+import ListComponent from "./ListComponent";
 
 export default function App() {
   return (
     <BrowserRouter>
-    <div className="ms-Fabric">
-      <div style={{ display: "flex" }}>
-        <div className="ms-Grid-col ms-lg2">
+    <div>
+      <div style={{display:"flex"}}>
+        <div>
           <NavBar />
         </div>
-        <div className="ms-Grid-col ms-lg10">
+        <div style={{width:'100%'}}>
             <Switch>
               <Route exact path="/" component={CommandList} />
               <Route exact path="/combo" component={Combo} />
               <Route exact path="/choice" component={Choice} />
+              <Route exact path="/dialog" component={DialogComponent} />
+              <Route exact path="/card" component={CardComponent} />
+              <Route exact path="/search" component={SearchComponent} />
+              <Route exact path="/list" component={ListComponent} />
             </Switch>
         </div>
       </div>

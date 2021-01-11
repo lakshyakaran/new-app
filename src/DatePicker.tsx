@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { Calendar, DayOfWeek, DateRangeType } from 'office-ui-fabric-react/lib/Calendar';
 import { DefaultButton } from 'office-ui-fabric-react/lib/Button';
-import { addDays, getDateRangeArray } from '@fluentui/date-time-utilities'
+import { addDays, getDateRangeArray } from '@fluentui/date-time-utilities';
 
-
-export interface CalendarExampleProps {
+export interface ICalendarInlineExampleProps {
   isMonthPickerVisible?: boolean;
   dateRangeType: DateRangeType;
-  autoNavigateOnSelection?: boolean;
+  autoNavigateOnSelection: boolean;
   showGoToToday: boolean;
   showNavigateButtons?: boolean;
   highlightCurrentMonth?: boolean;
@@ -53,21 +52,26 @@ const dayPickerStrings = {
   monthPickerHeaderAriaLabel: '{0}, select to change the year',
   yearPickerHeaderAriaLabel: '{0}, select to change the month',
 };
-
+const divStyle: React.CSSProperties = {
+  height: 'auto',
+};
+const buttonStyle: React.CSSProperties = {
+  margin: '17px 10px 0 0',
+};
 let dateRangeString: string | null = null;
 
-const DatePicker: React.FunctionComponent<CalendarExampleProps> = (
-    props: CalendarExampleProps,
-) =>
-{
-    const [selectedDateRange, setSelectedDateRange] = React.useState<Date[]>();
-    const [selectedDate, setSelectedDate] = React.useState<Date>();
-    const onSelectDate = (date: Date, dateRangeArray: Date[]): void => {
-        setSelectedDate(date);
-        setSelectedDateRange(dateRangeArray);
-    };
+const DatePicker: React.FunctionComponent<ICalendarInlineExampleProps> = (
+  props: ICalendarInlineExampleProps,
+) => {
+  const [selectedDateRange, setSelectedDateRange] = React.useState<Date[]>();
+  const [selectedDate, setSelectedDate] = React.useState<Date>();
 
-    const goPrevious = () => {
+  const onSelectDate = (date?: Date, dateRangeArray?: Date[]): void => {
+    setSelectedDate(date);
+    setSelectedDateRange(dateRangeArray);
+  };
+
+  const goPrevious = () => {
     const goPreviousSelectedDate = selectedDate || new Date();
     const dateRangeArray = getDateRangeArray(goPreviousSelectedDate, props.dateRangeType, DayOfWeek.Sunday);
     let subtractFrom = dateRangeArray[0];
@@ -82,32 +86,61 @@ const DatePicker: React.FunctionComponent<CalendarExampleProps> = (
     };
   };
 
-    const goNext = () => {
-        const goNextSelectedDate = selectedDate || new Date();
-        const dateRangeArray = getDateRangeArray(goNextSelectedDate, props.dateRangeType, DayOfWeek.Sunday);
-        const newSelectedDate = addDays(dateRangeArray.pop()!, 1);
+  const goNext = () => {
+    const goNextSelectedDate = selectedDate || new Date();
+    const dateRangeArray = getDateRangeArray(goNextSelectedDate, props.dateRangeType, DayOfWeek.Sunday);
+    const newSelectedDate = addDays(dateRangeArray.pop()!, 1);
 
-        return {
-        goNextSelectedDate: newSelectedDate,
-        };
+    return {
+      goNextSelectedDate: newSelectedDate,
     };
+  };
 
-    const onDismiss = () => {
-        return selectedDate;
-    };
+  const onDismiss = () => {
+    return selectedDate;
+  };
 
-    if (selectedDateRange) {
-        const rangeStart = selectedDateRange[0];
-        const rangeEnd = selectedDateRange[selectedDateRange.length - 1];
-        dateRangeString = rangeStart.toLocaleDateString() + '-' + rangeEnd.toLocaleDateString();
-    }
+  if (selectedDateRange) {
+    const rangeStart = selectedDateRange[0];
+    const rangeEnd = selectedDateRange[selectedDateRange.length - 1];
+    dateRangeString = rangeStart.toLocaleDateString() + '-' + rangeEnd.toLocaleDateString();
+  }
 
-    return (
-        <Calendar
+  return (
+    <div style={divStyle}>
+      {
+        <div>
+          Selected date(s): <span>{!selectedDate ? 'Not set' : selectedDate.toLocaleString()}</span>
+        </div>
+      }
+      <div>
+        Selected dates:
+        <span> {!dateRangeString ? 'Not set' : dateRangeString}</span>
+      </div>
+      {(props.minDate || props.maxDate) && (
+        <div>
+          Date boundary:
+          <span>
+            {' '}
+            {props.minDate ? props.minDate.toLocaleDateString() : 'Not set'}-
+            {props.maxDate ? props.maxDate.toLocaleDateString() : 'Not set'}
+          </span>
+        </div>
+      )}
+      {props.restrictedDates && (
+        <div>
+          Disabled date(s):
+          <span>
+            {' '}
+            {props.restrictedDates.length > 0
+              ? props.restrictedDates.map(d => d.toLocaleDateString()).join(', ')
+              : 'Not set'}
+          </span>
+        </div>
+      )}
+      <Calendar
         // eslint-disable-next-line react/jsx-no-bind
-            onSelectDate={() => {
-                console.log("date==>")
-        }}
+        onSelectDate={onSelectDate}
         // eslint-disable-next-line react/jsx-no-bind
         onDismiss={onDismiss}
         isMonthPickerVisible={props.isMonthPickerVisible}
@@ -128,6 +161,23 @@ const DatePicker: React.FunctionComponent<CalendarExampleProps> = (
         showSixWeeksByDefault={props.showSixWeeksByDefault}
         workWeekDays={props.workWeekDays}
       />
-    )
-}
-export default DatePicker
+      {props.showNavigateButtons && (
+        <div>
+          <DefaultButton
+            style={buttonStyle}
+            // eslint-disable-next-line react/jsx-no-bind
+            onClick={goPrevious}
+            text="Previous"
+          />
+          <DefaultButton
+            style={buttonStyle}
+            // eslint-disable-next-line react/jsx-no-bind
+            onClick={goNext}
+            text="Next"
+          />
+        </div>
+      )}
+    </div>
+  );
+};
+export default DatePicker;

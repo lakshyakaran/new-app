@@ -8,21 +8,19 @@ import { useId } from '@uifabric/react-hooks';
 const options: IChoiceGroupOption[] = [
   { key: 'A', text: 'Option A' },
   { key: 'B', text: 'Option B' },
-  { key: 'C', text: 'Option C', disabled: true },
+  { key: 'C', text: 'Option C' },
   { key: 'D', text: 'Option D' },
 ];
 
 const Choice: React.FunctionComponent = () => {
-  // Use the useId() hook to ensure that the label ID is unique on the page. Notes:
-  // - It's also okay to use a plain string and manually ensure its uniqueness.
-  // - In a function component, we get the ID with the useId() hook so that it will stay the same.
-  //   (In a class, you'd create the ID in the constructor with getId and save it in a private member.)
   const labelId = useId('labelElement');
-
+  const [selectedOption, setSelected] = React.useState('')
+  function _onChange(ev?: React.FormEvent<HTMLElement | HTMLInputElement>, option?: IChoiceGroupOption): void {
+    setSelected(option?.key || '');
+  }
+  // console.log("selected option==>", selectedOption);
   return (
-    <div>
-      {/* ONLY do this if you need to customize the label.
-      In most cases you should use ChoiceGroup's built-in `label` prop instead. */}
+    <div style={{justifyContent:'center'}}>
       <Label id={labelId}>
         <Stack horizontal verticalAlign="center">
           <span>Custom label&nbsp;&nbsp;</span>
@@ -30,9 +28,7 @@ const Choice: React.FunctionComponent = () => {
         </Stack>
       </Label>
       <ChoiceGroup
-        // This is usually what you should do
-        // label="Normal label"
-        defaultSelectedKey="B"
+        defaultSelectedKey={selectedOption}
         options={options}
         onChange={_onChange}
         ariaLabelledBy={labelId}
@@ -41,7 +37,5 @@ const Choice: React.FunctionComponent = () => {
   );
 };
 
-function _onChange(ev?: React.FormEvent<HTMLElement | HTMLInputElement>, option?: IChoiceGroupOption): void {
-  console.dir(option);
-}
+
 export default Choice;
