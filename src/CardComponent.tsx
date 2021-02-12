@@ -58,7 +58,7 @@ function CardComponent() {
     }
     return (
         <div>
-            <SearchComponent searchStyle={{}} />
+            <SearchComponent searchStyle={{marginTop:10}} />
             <Stack style={{padding:20}}>
                 <Card tokens={cardTokens} aria-label="Clickable vertical card with image bleeding at the center of the card">
                     <Card.Item>

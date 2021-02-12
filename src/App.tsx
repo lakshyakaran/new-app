@@ -18,18 +18,19 @@ import DialogComponent from "./DialogComponent";
 import CardComponent from "./CardComponent";
 import SearchComponent from "./SearchComponent";
 import ListComponent from "./ListComponent";
+import Auth from "./Auth";
 
 export default function App() {
   return (
     <BrowserRouter>
-    <div>
-      <div style={{display:"flex"}}>
-        <div>
-          <NavBar />
-        </div>
-        <div style={{width:'100%'}}>
+      <div>
+        <div style={{ display: "flex" }}>
+          <div>
+            <NavBar />
+          </div>
+          <div style={{ width: "100%" }}>
             <Switch>
-              <Route exact path="/" component={CommandList} />
+              <Route exact path="/" component={Auth} />
               <Route exact path="/combo" component={Combo} />
               <Route exact path="/choice" component={Choice} />
               <Route exact path="/dialog" component={DialogComponent} />
@@ -37,9 +38,9 @@ export default function App() {
               <Route exact path="/search" component={SearchComponent} />
               <Route exact path="/list" component={ListComponent} />
             </Switch>
+          </div>
         </div>
       </div>
-    </div>
     </BrowserRouter>
   );
 }
