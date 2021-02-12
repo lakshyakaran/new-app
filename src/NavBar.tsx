@@ -30,6 +30,12 @@ import HomeIcon from "@material-ui/icons/Home";
 import SettingsIcon from "@material-ui/icons/Settings";
 import AssessmentIcon from "@material-ui/icons/Assessment";
 import AssignmentTurnedInIcon from "@material-ui/icons/AssignmentTurnedIn";
+import WorkIcon from "@material-ui/icons/Work";
+import CachedIcon from "@material-ui/icons/Cached";
+import FileCopyIcon from "@material-ui/icons/FileCopy";
+import ListIcon from "@material-ui/icons/List";
+import BarChartIcon from "@material-ui/icons/BarChart";
+import MenuOpenIcon from "@material-ui/icons/MenuOpen";
 initializeIcons();
 
 const navLinkGroups: INavLinkGroup[] = [
@@ -206,23 +212,32 @@ function NavBar(props: any) {
             Performance
             <Link to="/" />
           </MenuItem>
-          <MenuItem>Employee</MenuItem>
-          <SubMenu title={`Appraisal`} icon={<AssessmentIcon />}>
-            <MenuItem>
-              Goal Settings
-              <SubMenu>
-                <MenuItem>submenu 1</MenuItem>
-                <MenuItem>submenu 2</MenuItem>
-              </SubMenu>
+          <MenuItem
+            onClick={() => {
+              console.log("employee clicked==>");
+            }}
+          >
+            Employee
+          </MenuItem>
+          <SubMenu title={`Appraisal`} icon={<BarChartIcon />}>
+            <MenuItem icon={<SettingsIcon />}>
+              Setup
+              <Link to="/list" />
             </MenuItem>
+            <SubMenu title="Goal Settings" icon={<ListIcon />}>
+              <SubMenu title="submenu 1" icon={<MenuOpenIcon />}>
+                <MenuItem icon={<MenuOpenIcon />}>inside submenu 1</MenuItem>
+              </SubMenu>
+              <MenuItem icon={<MenuOpenIcon />}>submenu 2</MenuItem>
+            </SubMenu>
             <MenuItem icon={<AssessmentIcon />}>Self Assessment </MenuItem>
           </SubMenu>
           <SubMenu title="Confirmation" icon={<AssignmentTurnedInIcon />}>
-            <MenuItem>Confirmation Status</MenuItem>
-            <MenuItem>Confirmation Letter</MenuItem>
+            <MenuItem icon={<CachedIcon />}>Confirmation Status</MenuItem>
+            <MenuItem icon={<FileCopyIcon />}>Confirmation Letter</MenuItem>
           </SubMenu>
           <MenuItem>Manager</MenuItem>
-          <SubMenu title={`Appraisal`} icon={<AssessmentIcon />}>
+          <SubMenu title={`Appraisal`} icon={<BarChartIcon />}>
             <MenuItem icon={<SettingsIcon />}>
               Goal Settings
               <Link to="/list" />
@@ -230,8 +245,20 @@ function NavBar(props: any) {
             <MenuItem icon={<AssessmentIcon />}>Self Assessment </MenuItem>
           </SubMenu>
           <SubMenu title="Confirmation" icon={<AssignmentTurnedInIcon />}>
-            <MenuItem>Confirmation Status</MenuItem>
-            <MenuItem>Confirmation Letter</MenuItem>
+            <MenuItem icon={<CachedIcon />}>Confirmation Status</MenuItem>
+            <MenuItem icon={<FileCopyIcon />}>Confirmation Letter</MenuItem>
+          </SubMenu>
+          <MenuItem>HR Contact</MenuItem>
+          <SubMenu title={`Appraisal`} icon={<BarChartIcon />}>
+            <MenuItem icon={<SettingsIcon />}>
+              Goal Settings
+              <Link to="/list" />
+            </MenuItem>
+            <MenuItem icon={<AssessmentIcon />}>Self Assessment </MenuItem>
+          </SubMenu>
+          <SubMenu title="Confirmation" icon={<AssignmentTurnedInIcon />}>
+            <MenuItem icon={<CachedIcon />}>Confirmation Status</MenuItem>
+            <MenuItem icon={<FileCopyIcon />}>Confirmation Letter</MenuItem>
           </SubMenu>
         </Menu>
       </ProSidebar>

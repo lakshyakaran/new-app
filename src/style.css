@@ -15078,3 +15078,11 @@ label {
 /* .pro-sidebar {
     position: fixed;
 } */
+
+.pro-sidebar .pro-menu .pro-menu-item.pro-sub-menu .pro-inner-list-item .pro-inner-item>.pro-icon-wrapper {
+    display: inline;
+}
+
+.pro-sidebar .pro-menu .pro-menu-item.pro-sub-menu .pro-inner-list-item .pro-inner-item:before {
+    display: none;
+}
