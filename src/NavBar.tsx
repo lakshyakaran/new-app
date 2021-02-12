@@ -35,7 +35,9 @@ import CachedIcon from "@material-ui/icons/Cached";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import ListIcon from "@material-ui/icons/List";
 import BarChartIcon from "@material-ui/icons/BarChart";
+import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
 import MenuOpenIcon from "@material-ui/icons/MenuOpen";
+import ArrowRightIcon from "@material-ui/icons/ArrowRight";
 initializeIcons();
 
 const navLinkGroups: INavLinkGroup[] = [
@@ -135,6 +137,10 @@ const navStyles: Partial<INavStyles> = {
 };
 
 function NavBar(props: any) {
+  const menuData =
+    // '<div onClick={handlemenuClick}><MenuIcon style={{ color: "#FFF" }} /></div>';
+    '<i class="ti-settings"></i>';
+
   let history = useHistory();
   const [selectedNavKey, setSelectedNavKey] = React.useState("");
   const [collapsedMenu, setCollapsedMenu] = React.useState(false);
@@ -185,6 +191,9 @@ function NavBar(props: any) {
     return <MenuIcon />;
   };
 
+  const handleRoleMenu = (e: any, item: any) => {
+    console.log("employee clicked==>", item);
+  };
   return (
     // <Nav
     //   onLinkClick={_onLinkClick}
@@ -193,38 +202,36 @@ function NavBar(props: any) {
     //   styles={navStyles}
     //   groups={navLinkGroups}
     // />
-    <div style={{ height: "100vh", backgroundColor: "#006994 " }}>
+    <div style={{ backgroundColor: "#006994 " }}>
       <Header>
-        <div>
-          <div onClick={handlemenuClick}>
-            <MenuIcon style={{ color: "#FFF" }} />
-          </div>
+        <div onClick={handlemenuClick}>
+          <MenuIcon style={{ color: "#FFF" }} />
         </div>
       </Header>
-      <ProSidebar
-        style={{}}
-        breakPoint="md"
-        // width="260px"
-        collapsed={collapsedMenu}
-      >
+      <ProSidebar breakPoint="md" collapsed={collapsedMenu}>
         <Menu popperArrow={true} iconShape="circle">
-          <MenuItem icon={<HomeIcon />}>
+          {/* <MenuItem icon={<HomeIcon />}>
             Performance
             <Link to="/" />
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              console.log("employee clicked==>");
+          </MenuItem> */}
+          <SidebarHeader
+            onClick={(event) => {
+              handleRoleMenu(event, "Employee");
             }}
           >
             Employee
-          </MenuItem>
+          </SidebarHeader>
           <SubMenu title={`Appraisal`} icon={<BarChartIcon />}>
             <MenuItem icon={<SettingsIcon />}>
               Setup
-              <Link to="/list" />
+              <Link to="/home " />
             </MenuItem>
-            <SubMenu title="Goal Settings" icon={<ListIcon />}>
+            <SubMenu
+              suffix={<ArrowRightIcon style={{ fontSize: "25px" }} />}
+              title="Goal Settings"
+              icon={<ListIcon />}
+            >
+              <Link to="/appraisal/goalsetting " />
               <SubMenu title="submenu 1" icon={<MenuOpenIcon />}>
                 <MenuItem icon={<MenuOpenIcon />}>inside submenu 1</MenuItem>
               </SubMenu>
@@ -236,11 +243,21 @@ function NavBar(props: any) {
             <MenuItem icon={<CachedIcon />}>Confirmation Status</MenuItem>
             <MenuItem icon={<FileCopyIcon />}>Confirmation Letter</MenuItem>
           </SubMenu>
-          <MenuItem>Manager</MenuItem>
+        </Menu>
+      </ProSidebar>
+      <ProSidebar breakPoint="md" collapsed={collapsedMenu}>
+        <Menu popperArrow={true} iconShape="circle">
+          <SidebarHeader
+            onClick={(event) => {
+              handleRoleMenu(event, "Manager");
+            }}
+          >
+            Manager
+          </SidebarHeader>
           <SubMenu title={`Appraisal`} icon={<BarChartIcon />}>
             <MenuItem icon={<SettingsIcon />}>
               Goal Settings
-              <Link to="/list" />
+              <Link to="/appraisal/goalsetting " />
             </MenuItem>
             <MenuItem icon={<AssessmentIcon />}>Self Assessment </MenuItem>
           </SubMenu>
@@ -248,11 +265,21 @@ function NavBar(props: any) {
             <MenuItem icon={<CachedIcon />}>Confirmation Status</MenuItem>
             <MenuItem icon={<FileCopyIcon />}>Confirmation Letter</MenuItem>
           </SubMenu>
-          <MenuItem>HR Contact</MenuItem>
+        </Menu>
+      </ProSidebar>
+      <ProSidebar breakPoint="md" collapsed={collapsedMenu}>
+        <Menu popperArrow={true} iconShape="circle">
+          <SidebarHeader
+            onClick={(event) => {
+              handleRoleMenu(event, "HR Contact");
+            }}
+          >
+            HR Contact
+          </SidebarHeader>
           <SubMenu title={`Appraisal`} icon={<BarChartIcon />}>
             <MenuItem icon={<SettingsIcon />}>
               Goal Settings
-              <Link to="/list" />
+              <Link to="/appraisal/goalsetting " />
             </MenuItem>
             <MenuItem icon={<AssessmentIcon />}>Self Assessment </MenuItem>
           </SubMenu>
