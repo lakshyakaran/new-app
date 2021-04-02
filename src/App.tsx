@@ -19,6 +19,11 @@ import CardComponent from "./CardComponent";
 import SearchComponent from "./SearchComponent";
 import ListComponent from "./ListComponent";
 import Auth from "./Auth";
+import Table from "./table";
+
+
+
+
 
 export default function App() {
   return (
@@ -32,6 +37,9 @@ export default function App() {
             <Switch>
               <Route exact path="/" component={Auth} />
               <Route exact path="/combo" component={Combo} />
+
+              <Route exact path="/table" component={Table} />
+
               <Route exact path="/choice" component={Choice} />
               <Route exact path="/dialog" component={DialogComponent} />
               <Route exact path="/card" component={CardComponent} />
